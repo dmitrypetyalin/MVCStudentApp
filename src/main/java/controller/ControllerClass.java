@@ -4,8 +4,7 @@ import controller.interfaces.iGetModel;
 import controller.interfaces.iGetView;
 import model.domain.Student;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author PetSoft
@@ -21,37 +20,26 @@ public class ControllerClass {
         this.view = view;
     }
 
-    private boolean testData(List<Student> students)
-    {
-        if(students.size()>0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+    private boolean testData(List<Student> students) {
+        return !students.isEmpty();
     }
 
-    public void update()
-    {
+    public void update() {
         //MVC
         //view.printAllStudents(model.getAllStudents());
 
         //MVP
         buffer = model.getAllStudents();
 
-        if(testData(buffer))
-        {
+        if (testData(buffer)) {
             view.printAllStudents(buffer);
-        }
-        else{
+        } else {
             System.out.println("Список студентов пуст!");
         }
     }
 
     public void run() {
-        Command com = Command.NONE;
+        Command com;
         boolean getNewIteration = true;
         while (getNewIteration) {
             String command = view.prompt("Введите команду: ");
@@ -64,6 +52,14 @@ public class ControllerClass {
                 case LIST:
                     //MVC
                     view.printAllStudents(model.getAllStudents());
+                    break;
+                case DELETE:
+                    try {
+                        Student student = model.deleteStudent(Integer.parseInt(String.valueOf(view.prompt("Введите номер студента: "))));
+                        System.out.println(student == null ? "Студент не найден!" : student + " was deleted");
+                    } catch (NoSuchElementException ex) {
+                        System.out.println("Некорректное значение");
+                    }
                     break;
             }
         }

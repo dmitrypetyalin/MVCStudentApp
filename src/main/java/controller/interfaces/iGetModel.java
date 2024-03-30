@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface iGetModel {
     public List<Student> getAllStudents();
+    public Student deleteStudent(int id);
 }

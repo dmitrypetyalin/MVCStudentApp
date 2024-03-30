@@ -8,12 +8,12 @@ import java.util.Scanner;
 
 /**
  * @author PetSoft
- * @date 25.03.2024 22:13
+ * @date 28.03.2024 21:25
  */
-public class ViewClass implements iGetView {
+public class ViewClassEng implements iGetView {
     @Override
     public void printAllStudents(List<Student> students) {
-        System.out.println("------------------- Список студентов ---------------------------");
+        System.out.println("------------------- List of students ---------------------------");
         for (Student s : students) {
             System.out.println(s);
         }

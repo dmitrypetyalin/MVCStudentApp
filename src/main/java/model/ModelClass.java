@@ -19,4 +19,15 @@ public class ModelClass implements iGetModel {
     public List<Student> getAllStudents() {
         return students;
     }
+
+    @Override
+    public Student deleteStudent(int id) {
+        Student deletedStudent = null;
+        for (Student student : students) {
+            if (student.getId() == id) {
+                deletedStudent = students.remove(id);
+            }
+        }
+        return deletedStudent;
+    }
 }
