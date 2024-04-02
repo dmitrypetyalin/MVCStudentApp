@@ -21,7 +21,7 @@ public class ModelClass implements iGetModel {
     }
 
     @Override
-    public Student deleteStudent(int id) {
+    public Student delete(int id) {
         Student deletedStudent = null;
         for (Student student : students) {
             if (student.getId() == id) {
@@ -29,5 +29,14 @@ public class ModelClass implements iGetModel {
             }
         }
         return deletedStudent;
+    }
+
+    @Override
+    public Student find(int id) {
+        for (Student student : students) {
+            if (student.getId() == id)
+                return student;
+        }
+        return null;
     }
 }

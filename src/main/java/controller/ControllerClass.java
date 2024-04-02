@@ -11,13 +11,20 @@ import java.util.*;
  * @date 25.03.2024 22:03
  */
 public class ControllerClass {
-    private iGetModel model;
-    private iGetView view;
+    //    private iGetModel model;
+    private final iGetView view;
+    private List<iGetModel> models;
     private List<Student> buffer = new ArrayList<>();
 
-    public ControllerClass(iGetModel model, iGetView view) {
-        this.model = model;
+    public ControllerClass(iGetView view, iGetModel model) {
+        this.models = new ArrayList<>();
+        this.models.add(model);
         this.view = view;
+    }
+
+    public ControllerClass(List<iGetModel> models, iGetView view) {
+        this.view = view;
+        this.models = models;
     }
 
     private boolean testData(List<Student> students) {
@@ -29,7 +36,7 @@ public class ControllerClass {
         //view.printAllStudents(model.getAllStudents());
 
         //MVP
-        buffer = model.getAllStudents();
+        buffer = models.get(0).getAllStudents();
 
         if (testData(buffer)) {
             view.printAllStudents(buffer);
@@ -49,13 +56,38 @@ public class ControllerClass {
                     getNewIteration = false;
                     System.out.println("Выход из программы!");
                     break;
+
                 case LIST:
                     //MVC
-                    view.printAllStudents(model.getAllStudents());
+                    for (iGetModel model : models) {
+                        view.printAllStudents(model.getAllStudents());
+                    }
                     break;
+
+                case FIND:
+                    try {
+                        int id = Integer.parseInt(String.valueOf(view.prompt("Введите номер студента: ")));
+                        Student student = null;
+                        for (iGetModel model : models) {
+                            student = model.find(id);
+                            if (student != null)
+                                break;
+                        }
+                        System.out.println(student == null ? "Студент не найден!" : student + " was found");
+                    } catch (NoSuchElementException ex) {
+                        System.out.println("Некорректное значение");
+                    }
+                    break;
+
                 case DELETE:
                     try {
-                        Student student = model.deleteStudent(Integer.parseInt(String.valueOf(view.prompt("Введите номер студента: "))));
+                        int id = Integer.parseInt(String.valueOf(view.prompt("Введите номер студента: ")));
+                        Student student = null;
+                        for (iGetModel model : models) {
+                            student = model.delete(id);
+                            if (student != null)
+                                break;
+                        }
                         System.out.println(student == null ? "Студент не найден!" : student + " was deleted");
                     } catch (NoSuchElementException ex) {
                         System.out.println("Некорректное значение");

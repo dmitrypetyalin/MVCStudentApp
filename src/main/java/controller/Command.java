@@ -10,6 +10,7 @@ public enum Command {
     CREATE,
     UPDATE,
     LIST,
+    FIND,
     DELETE,
-    EXIT
+    EXIT,
 }

@@ -9,6 +9,7 @@ import java.util.List;
  * @date 25.03.2024 22:07
  */
 public interface iGetModel {
-    public List<Student> getAllStudents();
-    public Student deleteStudent(int id);
+    List<Student> getAllStudents();
+    Student delete(int id);
+    Student find(int id);
 }

@@ -62,7 +62,12 @@ public class FileModelClass implements iGetModel {
     }
 
     @Override
-    public Student deleteStudent(int id) {
+    public Student delete(int id) {
+        return null;
+    }
+
+    @Override
+    public Student find(int id) {
         return null;
     }
 }
